@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>D:\Visual Studio Projects\Youtube Music\Youtube Music\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="UserControls\NowPlayingList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Downloads.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Home.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Search.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="NotifyIconResources.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\AnimatedScrollViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\AutoSuggestBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\CircularProgressBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ContextMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Expander.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\HotkeysListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Path.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\PlaylistListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ProgressRing.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\RadioButtons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ScrollBars.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Slider.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\NowPlayingList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Downloads.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Home.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LikedSongs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Search.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

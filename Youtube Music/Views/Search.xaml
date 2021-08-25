@@ -1,0 +1,108 @@
+﻿<Page x:Class="Youtube_Music.Views.Search"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:controls="clr-namespace:Youtube_Music.Controls"
+      xmlns:models="clr-namespace:Youtube_Music.Models"
+      xmlns:viewmodels="clr-namespace:Youtube_Music.ViewModels"
+      xmlns:usercontrols="clr-namespace:Youtube_Music.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="350"
+      TextElement.Foreground="White"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="12"
+      FontFamily="Segoe UI"
+      Title="Search"
+      DataContext="{StaticResource MainViewModel}"
+      d:DataContext="{d:DesignInstance viewmodels:MainViewModel}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:AutoSuggestBox x:Name="SearchBar" Margin="5"
+                                 Suggestions="{Binding Search.SearchSuggestions}"
+                                 SuggestionChosen="SearchBar_SuggestionChosen">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding Search.QueryChangedCommand}" CommandParameter="{Binding ElementName=SearchBar, Path=Text}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="SuggestionChosen">
+                    <i:InvokeCommandAction Command="{Binding Search.SuggestionChosenCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </controls:AutoSuggestBox>
+        <Grid Grid.Row="1" Height="40">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <RadioButton x:Name="AllFilter" Content="All" Style="{StaticResource ModernRadioButton}" IsChecked="True" Command="{Binding Search.AllCheckedCommand}"/>
+            <RadioButton Grid.Column="1" Content="Songs" Style="{StaticResource ModernRadioButton}" Command="{Binding Search.SongsCheckedCommand}"/>
+            <RadioButton Grid.Column="2" Content="Videos" Style="{StaticResource ModernRadioButton}" Command="{Binding Search.VideosCheckedCommand}"/>
+        </Grid>
+        <controls:AnimatedScrollViewer Grid.Row="2">
+            <ListView ItemsSource="{Binding Search.Shelfs, IsAsync=False, Mode=TwoWay}" Style="{StaticResource PlaylistListView}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="-1 0 -1 20"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:SearchShelf}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Title}" Foreground="White" FontSize="18" FontFamily="Segoe UI" FontWeight="ExtraBold" Margin="5 0 0 0"/>
+                            <ListView Grid.Row="1" ItemsSource="{Binding Videos}" Style="{StaticResource PlaylistListView}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid MouseLeftButtonUp="Video_Click" Background="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" Margin="5 9 0 0"/>
+                                            <TextBlock Grid.Row="1" Text="{Binding Artist}" Foreground="DarkGray" TextTrimming="CharacterEllipsis" VerticalAlignment="Bottom" Margin="5 0 0 9"/>
+                                            <TextBlock Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center" Text="{Binding Duration}" Margin="15 0"/>
+                                            <Grid.ContextMenu>
+                                                <ContextMenu DataContext="{StaticResource MainViewModel}">
+                                                    <MenuItem Header="Download" Command="{Binding DownloadCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+                                                    <MenuItem Header="Copy link" Command="{Binding CopyLinkCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}}"/>
+                                                </ContextMenu>
+                                            </Grid.ContextMenu>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </controls:AnimatedScrollViewer>
+        
+        <Border Grid.RowSpan="3" Background="#C01D1D1D" Visibility="{Binding Search.IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" Width="55" Height="55" Margin="0 -10 0 0"
+                CornerRadius="5">
+            <controls:ProgressRing  HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" />
+        </Border>
+        
+    </Grid>
+</Page>

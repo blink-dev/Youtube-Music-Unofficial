@@ -1,0 +1,33 @@
+﻿<Page x:Class="Youtube_Music.Views.Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:gkeys="clr-namespace:GKeys"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      TextElement.Foreground="White"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="12"
+      Title="Settings">
+
+    <Grid>
+        <Border BorderThickness="2" BorderBrush="#404040" Margin="5" CornerRadius="10" Padding="10 0 5 5" VerticalAlignment="Top">
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Border Background="#303030"  BorderBrush="#404040" BorderThickness="2 0 2 2" CornerRadius="0 0 15 15" Padding="35 3 35 5" HorizontalAlignment="Center" Margin="0 -2 0 10">
+                    <TextBlock Text="Hotkeys" FontSize="12"/>
+                </Border>
+                <ListView Style="{StaticResource HotkeysListView}" ItemsSource="{x:Static gkeys:GlobalHotkeys.Hotkeys}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Label, StringFormat={}{0} :}" FontSize="12" Margin="0 0 20 0" VerticalAlignment="Center"/>
+                                <Button FocusVisualStyle="{x:Null}" Content="{Binding KeyString, Mode=TwoWay}" MinWidth="150" Click="HotkeyInputKey_Click" PreviewKeyDown="Button_PreviewKeyDown" KeyUp="HotkeyInputKey_KeyUp" LostFocus="Button_LostFocus"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
