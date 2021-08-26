@@ -90,7 +90,7 @@ namespace Youtube_Music.Services
             return suggestions.ToArray();
         }
 
-        public async Task<SearchShelf[]> SearchTest(string input, FilterType filter = FilterType.All)
+        public async Task<SearchShelf[]> Search(string input, FilterType filter = FilterType.All)
         {
             var context = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(Environment.CurrentDirectory + "/context.json"));
             if (filter != FilterType.All) context.Add("params", GetFilterType(filter));
@@ -149,58 +149,6 @@ namespace Youtube_Music.Services
                     Videos = videos.ToArray()
                 };
                 results.Add(searchShelf);
-            }
-            return results.ToArray();
-        }
-
-        public async Task<YoutubeVideoInfo[]> Search(string input, FilterType filter = FilterType.All)
-        {
-            var context = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(Environment.CurrentDirectory + "/context.json"));
-            if (filter != FilterType.All) context.Add("params", GetFilterType(filter));
-            context.Add("query", input);
-            HttpContent content = new StringContent(context.ToString());
-            var response = await client.PostAsync($"{BASE_URL}search{PARAMS}", content);
-            using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            var obj = await new StreamReader(responseStream).ReadToEndAsync().ConfigureAwait(false);
-            var arr = JObject.Parse(obj);
-            var cont = arr.SelectToken("contents.sectionListRenderer.contents");
-            //var test = cont.ToString();
-
-            List<YoutubeVideoInfo> results = new();
-            foreach (var sugg in cont)
-            {
-                var contents = sugg.SelectToken("musicShelfRenderer.contents");
-                if (contents is null) continue;
-
-                var shelfTitle = string.Concat(sugg.SelectToken("musicShelfRenderer.title.runs").Values<string>("text"));
-
-                foreach (var item in contents)
-                {
-                    var thumb = item.SelectToken("musicResponsiveListItemRenderer.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails")[0].Value<string>("url");
-                    var columns = item.SelectToken("musicResponsiveListItemRenderer.flexColumns");
-
-                    var videoIdColumn = columns[0].SelectToken("musicResponsiveListItemFlexColumnRenderer.text.runs")[0].SelectToken("navigationEndpoint.watchEndpoint");
-                    if (videoIdColumn is null) continue;
-                    var videoId = videoIdColumn.Value<string>("videoId");
-
-                    var titleRuns = columns[0].SelectToken("musicResponsiveListItemFlexColumnRenderer.text.runs");
-                    var title = string.Concat(titleRuns.Values<string>("text"));
-
-                    var artistsRuns = columns[1].SelectToken("musicResponsiveListItemFlexColumnRenderer.text.runs");
-                    var artists = string.Concat(artistsRuns.Values<string>("text").SkipLast(4));
-
-                    var duration = string.Concat(artistsRuns.Values<string>("text").Last());
-
-                    YoutubeVideoInfo videoInfo = new()
-                    {
-                        Artist = artists,
-                        Title = title,
-                        VideoId = videoId,
-                        Duration = duration,
-                        Thumbnail = new Uri(thumb)
-                    };
-                    results.Add(videoInfo);
-                }
             }
             return results.ToArray();
         }

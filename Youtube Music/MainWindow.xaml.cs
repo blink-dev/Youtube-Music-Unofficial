@@ -126,7 +126,6 @@ namespace Youtube_Music
                 e.Cancel = true;
                 _navArgs = e;
                 var anim = Resources["AppFrameNavigationAnimation0"] as Storyboard;
-                anim.Completed += SlideCompleted;
                 anim.Begin();
             }
         }

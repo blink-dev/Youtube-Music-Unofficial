@@ -106,7 +106,7 @@ namespace Youtube_Music.ViewModels
         public async Task SearchVideos(string query, Services.YTMusicApi.FilterType filter)
         {
             IsLoading = true;
-            var search = await App.MusicApi.SearchTest(query, filter);
+            var search = await App.MusicApi.Search(query, filter);
             Shelfs = new ObservableCollection<SearchShelf>(search);
             IsLoading = false;
         }

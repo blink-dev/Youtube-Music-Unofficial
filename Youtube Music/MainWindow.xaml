@@ -45,7 +45,7 @@
             <DoubleAnimation Storyboard.TargetName="InfoGridChevronRotateTransform" Storyboard.TargetProperty="Angle" To="180" Duration="0:0:.2"/>
         </Storyboard>
 
-        <Storyboard x:Key="AppFrameNavigationAnimation0">
+        <Storyboard x:Key="AppFrameNavigationAnimation0" Completed="SlideCompleted">
             <DoubleAnimation Storyboard.TargetName="AppFrame" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:.15"/>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AppFrameScaleTransform" Storyboard.TargetProperty="ScaleX">
                 <SplineDoubleKeyFrame Value="0.9" KeyTime="0:0:.15" KeySpline="0.7, 0, 1, 0.5"/>
